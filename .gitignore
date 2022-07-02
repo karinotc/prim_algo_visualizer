@@ -1,0 +1,14 @@
+# .idea directory
+.idea
+
+# Gradle and Maven with auto-import
+# auto-import.
+*.iml
+*.ipr
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+modules.xml
