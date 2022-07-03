@@ -18,6 +18,7 @@ public class PrimAlgo {
 
     public void addEdge(int firstNode, int secondNode, Integer weight) {
         graph.get(firstNode - 1).addAdjacent(graph.get(secondNode - 1), new Edge(weight));
+        graph.get(secondNode - 1).addAdjacent(graph.get(firstNode - 1), new Edge(weight));
     }
 
     private boolean isDisconnected() {
