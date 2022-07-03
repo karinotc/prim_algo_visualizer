@@ -13,7 +13,7 @@ public class PrimAlgo {
     }
 
     public void addNode() {
-        graph.add(new Node(graph.size() + 1));
+        graph.add(new Node());
     }
 
     public void addEdge(int firstNode, int secondNode, Integer weight) {
