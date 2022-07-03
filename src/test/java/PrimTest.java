@@ -14,9 +14,32 @@ public class PrimTest {
     void setUp() {
         algo = new PrimAlgo();
     }
+
     @Test
-    @DisplayName("Graph with two nodes")
-    void testPrimAlgoTwo() {
+    @DisplayName("Graph with one nodes")
+    void testPrimAlgoOne() {
+        algo.addNode();
+        algo.runAlgorithm(1);
+
+        String answer = algo.minimumSpanningTree();
+        assertEquals(answer, "", "wrong answer");
+    }
+
+    @Test
+    @DisplayName("Graph with two nodes (first node)")
+    void testPrimAlgoTwo1() {
+        algo.addNode();
+        algo.addNode();
+        algo.addEdge(1, 2, 2);
+        algo.runAlgorithm(1);
+
+        String answer = algo.minimumSpanningTree();
+        assertEquals(answer, "1 2 2\n", "wrong answer");
+    }
+
+    @Test
+    @DisplayName("Graph with two nodes (second node)")
+    void testPrimAlgoTwo2() {
         algo.addNode();
         algo.addNode();
         algo.addEdge(1, 2, 2);
@@ -38,7 +61,7 @@ public class PrimTest {
 
         algo.runAlgorithm(2);
         String answer = algo.minimumSpanningTree();
-        assertEquals(answer, "2 3 0\n2 1 0\n", "wrong answer");
+        assertEquals(answer, "1 3 0\n2 1 0\n", "wrong answer");
     }
 
     //void testPrimAlgoDisconnected(){}
@@ -66,6 +89,6 @@ public class PrimTest {
         algo.runAlgorithm(4);
 
         String answer = algo.minimumSpanningTree();
-        assertEquals(answer, "2 1 4\n2 6 1\n3 2 2\n4 3 1\n6 5 6\n6 7 3\n7 10 2\n7 8 4\n10 9 1\n", "wrong answer");
+        assertEquals(answer, "2 6 1\n2 1 4\n3 2 2\n4 3 1\n6 5 6\n6 7 3\n7 10 2\n7 8 4\n10 9 1\n", "wrong answer");
     }
 }
