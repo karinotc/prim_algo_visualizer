@@ -6,13 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Node {
-    private int number;
     private Status status = Status.NOT_VISITED;
     private final Map<Node, Edge> adjacent = new HashMap<>();
 
-    public Node(int number) {
-        this.number = number;
-    }
+    public Node() {}
 
     public void addAdjacent(Node node, Edge edge) {
         adjacent.put(node, edge);
@@ -32,10 +29,6 @@ public class Node {
 
     public boolean isVisited() {
         return this.status == Status.VISITED;
-    }
-
-    public int getNumber() {
-        return this.number;
     }
 
     public Map.Entry<Node, Edge> getMinEdge() {

@@ -1,5 +1,3 @@
-//package test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class PrimTest {
     PrimAlgo algo;
+
     @BeforeEach
     void setUp() {
         algo = new PrimAlgo();
@@ -69,7 +68,7 @@ public class PrimTest {
     @Test
     @DisplayName("Graph with ten nodes")
     void testPrimAlgoTen() {
-        for (int i = 0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             algo.addNode();
         }
         algo.addEdge(1, 2, 4);
