@@ -1,6 +1,9 @@
 # .idea directory
 .idea
 
+#target/ directory
+target/
+
 # Gradle and Maven with auto-import
 # auto-import.
 *.iml
