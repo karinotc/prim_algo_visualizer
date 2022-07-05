@@ -1,73 +1,35 @@
 package edu.app.algorithm;
 
+import edu.app.graph.WeightedConnectedGraph;
 import edu.app.graphcomponents.*;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class PrimAlgo {
-    private final ArrayList<Node> graph;
 
-    public PrimAlgo() {
-        this.graph = new ArrayList<>();
-    }
+    public PrimAlgo() {}
 
-    public void addNode() {
-        graph.add(new Node());
-    }
+    public void runAlgorithm(WeightedConnectedGraph graph, int startNode) {
 
-    public void addEdge(int firstNode, int secondNode, Integer weight) {
-        graph.get(firstNode - 1).addAdjacent(graph.get(secondNode - 1), new Edge(weight));
-        graph.get(secondNode - 1).addAdjacent(graph.get(firstNode - 1), new Edge(weight));
-    }
-
-    private boolean isDisconnected() {
-        for (Node node : graph) {
-            if (!node.isVisited())
-                return true;
-        }
-        return false;
-    }
-
-    public void runAlgorithm(int startNode) {
-        if (graph.size() > 0) {
-            graph.get(startNode - 1).setStatus(Status.VISITED);
+        if (graph.getListSize() > 0) {
+            graph.getNode(startNode - 1).visit();
         }
 
-        while (isDisconnected()) {
-            Edge nextMinEdge = new Edge(Integer.MAX_VALUE);
-            Node nextNode = graph.get(startNode - 1);
-            for (Node node : graph) {
+        while (!graph.allNodesChecked()) {
+            AlgoEdge nextMinEdge = new AlgoEdge(Integer.MAX_VALUE);
+            AlgoNode nextAlgoNode = graph.getNode(startNode - 1);
+            for (int i = 0; i < graph.getListSize(); i++) {
+                AlgoNode node = graph.getNode(i);
                 if (node.isVisited()) {
-                    Map.Entry<Node, Edge> candidate = node.getMinEdge();
+                    Map.Entry<AlgoNode, AlgoEdge> candidate = node.getMinEdge();
                     if (candidate.getValue().getWeight() < nextMinEdge.getWeight()) {
                         nextMinEdge = candidate.getValue();
-                        nextNode = candidate.getKey();
+                        nextAlgoNode = candidate.getKey();
                     }
                 }
             }
-            nextMinEdge.setStatus(Status.BELONGS_TO_MST);
-            nextNode.setStatus(Status.VISITED);
+            nextMinEdge.include();
+            nextAlgoNode.visit();
         }
-    }
-
-    public String minimumSpanningTree() {
-        StringBuilder mst = new StringBuilder();
-        for (Node node : graph) {
-            if (node.isVisited()) {
-                Map<Node, Edge> adjacent = node.getAdjacent();
-                for (Map.Entry<Node, Edge> pair : (Iterable<Map.Entry<Node, Edge>>) adjacent.entrySet()) {
-                    if (pair.getValue().getStatus() == Status.BELONGS_TO_MST) {
-                        if (!pair.getValue().isPrinted()) {
-                            mst.append(graph.indexOf(node) + 1).append(" ");
-                            mst.append(graph.indexOf(pair.getKey()) + 1).append(" ");
-                            mst.append(pair.getValue().getWeight()).append("\n");
-                            pair.getValue().setPrinted(true);
-                        }
-                    }
-                }
-            }
-        }
-        return mst.toString();
     }
 }
