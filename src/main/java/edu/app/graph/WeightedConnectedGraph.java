@@ -4,6 +4,8 @@ import edu.app.graphcomponents.AlgoEdge;
 import edu.app.graphcomponents.AlgoNode;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 
 public class WeightedConnectedGraph implements Graph, Weighted, Connected {
     ArrayList<AlgoNode> adjacencyList;
@@ -43,9 +45,36 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         return adjacencyList.get(from - 1).getEdge(adjacencyList.get(to - 1)).getWeight();
     }
 
+    private void dfs(int source, ArrayList<AlgoNode> adjacencyList, boolean[] visited) {
+        visited[source] = true;
+
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            Set<AlgoNode> neighbours = adjacencyList.get(source).getNeighbours();
+            Iterator<AlgoNode> it = neighbours.iterator();
+
+            for (AlgoNode node : neighbours) {
+                int nodeIndex = adjacencyList.indexOf(node);
+                if (!visited[nodeIndex])
+                    dfs(nodeIndex, adjacencyList, visited);
+            }
+        }
+    }
+
     @Override
     public boolean isConnected() {
-        return false;
+        boolean[] visited = new boolean[adjacencyList.size()];
+        ArrayList<AlgoNode> copy = new ArrayList<>(adjacencyList);
+        dfs(0, copy, visited);
+
+        boolean connected = true;
+        for (boolean i : visited) {
+            if (!i) {
+                connected = false;
+                break;
+            }
+        }
+
+        return connected;
     }
 
     public boolean allNodesChecked() {
