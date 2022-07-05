@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class Button extends JButton {
+abstract public class Button extends JButton {
 
     public Button(String buttonText, ImageIcon icon) {
 
