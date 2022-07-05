@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 abstract public class Node {
-    int id;
+    String id;
     private final Map<Node, Edge> adjacent = new HashMap<>();
 
-    int getId() {
+    String getId() {
         return id;
     }
 

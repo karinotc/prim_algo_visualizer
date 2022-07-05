@@ -12,11 +12,11 @@ public class App extends JFrame {
     Canvas canvasPanel;
 
 
+
     public App() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000, 500);
         this.setTitle("Prim");
-        this.setLayout(new BorderLayout());
 
         menuPanel = new Menu();
         canvasPanel = new Canvas();
@@ -25,8 +25,10 @@ public class App extends JFrame {
 
         menuPanel.setPreferredSize(new Dimension(100, 70));
 
-//        this.add(menuPanel, BorderLayout.NORTH);
+        this.setLayout(new BorderLayout());
+        this.add(menuPanel, BorderLayout.NORTH);
         this.add(canvasPanel, BorderLayout.CENTER);
+
         this.setVisible(true);
     }
 

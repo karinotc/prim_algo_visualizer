@@ -1,6 +1,8 @@
 package edu.app.graphcomponents;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DrawableNode extends Node {
 
@@ -8,11 +10,16 @@ public class DrawableNode extends Node {
     private final int x;
     private final int y;
     private boolean isSelected = false;
+    private final ArrayList<String> incidentalNodesId;
+
 
     public DrawableNode(int centerX, int centerY) {
         this.x = centerX;
         this.y = centerY;
+        this.incidentalNodesId = new ArrayList<String>();
+        this.id = Integer.toString(this.x) + "#" + Integer.toString(this.y);
     }
+
 
     public void drawSelectedNode(Graphics2D g2) {
         g2.setPaint(new Color(70, 188, 104));
@@ -48,4 +55,11 @@ public class DrawableNode extends Node {
         isSelected = !isSelected;
     }
 
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public void addIncidentalNode(DrawableNode node) {
+        incidentalNodesId.add(node.getId());
+    }
 }

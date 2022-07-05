@@ -8,14 +8,14 @@ public class DrawableEdge extends Edge {
     private int startX, startY, endX, endY;
 
 
-    public DrawableEdge(int startX, int startY, int endX, int endY) {
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
+    public DrawableEdge(DrawableNode firstNode, DrawableNode secondNode) {
+        this.startX = firstNode.getX();
+        this.startY = firstNode.getY();
+        this.endX = secondNode.getX();
+        this.endY = secondNode.getY();
     }
 
-    public void drawLine(Graphics2D g2) {
+    public void drawEdge(Graphics2D g2) {
         g2.setStroke(new BasicStroke(stroke));
         g2.setPaint(new Color(0, 0, 0));
         g2.drawLine(startX, startY, endX, endY);
