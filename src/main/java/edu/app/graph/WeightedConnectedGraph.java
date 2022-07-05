@@ -96,4 +96,14 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
     public int getNodeIndex(AlgoNode node) {
         return adjacencyList.indexOf(node);
     }
+
+    public int getEdgeAmount(){
+        int edgeAmount = 0;
+        for (AlgoNode node : adjacencyList){
+            edgeAmount += node.getNeighbours().size();
+        }
+        edgeAmount /= 2;
+        return edgeAmount;
+    }
+
 }
