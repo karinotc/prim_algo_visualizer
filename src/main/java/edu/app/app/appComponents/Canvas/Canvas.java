@@ -1,31 +1,46 @@
 package edu.app.app.appComponents.Canvas;
 
+import edu.app.app.appComponents.Canvas.CanvasComponents.CanvasForm;
+import edu.app.app.appComponents.Canvas.CanvasComponents.WeightInputWindow;
 import edu.app.graphcomponents.DrawableEdge;
 import edu.app.graphcomponents.DrawableNode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Canvas extends JPanel implements MouseListener {
+public class Canvas extends JPanel implements MouseListener, ActionListener {
 
     private int nodeCurrentId;
     private final ArrayList<DrawableNode> nodes;
     private final ArrayList<DrawableEdge> edges;
     private final ArrayList<DrawableNode> selectedNodes;
+
+    CanvasForm form;
+    JButton submitButton;
+    JTextField textField;
     public Canvas() {
         nodes = new ArrayList<DrawableNode>();
         edges = new ArrayList<DrawableEdge>();
         selectedNodes = new ArrayList<DrawableNode>();
         this.addMouseListener(this);
+
+        form = new CanvasForm();
+        form.submitButton.addActionListener(this);;
+
+
+        this.setLayout(new BorderLayout());
+        this.add(form, BorderLayout.LINE_END);
+
         addNewNode(100, 100);
         addNewNode(230, 45);
         addNewNode(89, 32);
-        repaint();
     }
 
 
@@ -47,6 +62,8 @@ public class Canvas extends JPanel implements MouseListener {
         for(DrawableNode drawableNode : nodes) {
             drawableNode.setSelected(false);
         }
+
+        selectedNodes.clear();
     }
 
     private void selectNode(int clickX, int clickY) {
@@ -73,15 +90,17 @@ public class Canvas extends JPanel implements MouseListener {
         if(isAbleToPutNode(x, y)) {
             nodes.add(new DrawableNode(x, y));
         }
-
     }
-    private void connectTwoNodes(DrawableNode firstNode, DrawableNode secondNode) {
-        DrawableEdge newEdge = new DrawableEdge(firstNode, secondNode);
+
+
+    private void createWeighedEdgeBetweenTwoNodes(DrawableNode firstNode, DrawableNode secondNode, int weight) {
+
+        DrawableEdge newEdge = new DrawableEdge(firstNode, secondNode, weight);
         firstNode.addIncidentalNode(secondNode);
         secondNode.addIncidentalNode(firstNode);
         edges.add(newEdge);
-        selectedNodes.clear();
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -91,15 +110,13 @@ public class Canvas extends JPanel implements MouseListener {
         if(e.getButton() == MouseEvent.BUTTON3) {
             selectNode(x, y);
             if(selectedNodes.size() == 2) {
-                connectTwoNodes(selectedNodes.get(0), selectedNodes.get(1));
-                unselectAllNodes();
+                form.enableForm();
             }
         } else if(e.getButton() == MouseEvent.BUTTON1) {
             addNewNode(x, y);
         }
 
         repaint();
-
     }
 
     @Override
@@ -119,6 +136,22 @@ public class Canvas extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            int weight = form.getData();
+            createWeighedEdgeBetweenTwoNodes(selectedNodes.get(0), selectedNodes.get(1), weight);
+
+        } catch (NumberFormatException exception) {
+            System.out.println("Wrong input format");
+        }
+
+        unselectAllNodes();
+        form.disableForm();
+        repaint();
 
     }
 }
