@@ -1,4 +1,4 @@
-package edu.app.main;
+package edu.app;
 
 import edu.app.app.App;
 
