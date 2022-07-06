@@ -105,5 +105,4 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         edgeAmount /= 2;
         return edgeAmount;
     }
-
 }
