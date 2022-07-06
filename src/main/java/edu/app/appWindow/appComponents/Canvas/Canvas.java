@@ -1,7 +1,6 @@
-package edu.app.app.appComponents.Canvas;
+package edu.app.appWindow.appComponents.Canvas;
 
-import edu.app.app.appComponents.Canvas.CanvasComponents.CanvasForm;
-import edu.app.app.appComponents.Canvas.CanvasComponents.WeightInputWindow;
+import edu.app.appWindow.appComponents.Canvas.CanvasComponents.CanvasForm;
 import edu.app.graphcomponents.DrawableEdge;
 import edu.app.graphcomponents.DrawableNode;
 
@@ -11,21 +10,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Rectangle2D;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Canvas extends JPanel implements MouseListener, ActionListener {
 
-    private int nodeCurrentId;
+    private int nodeCurrentNumber;
     private final ArrayList<DrawableNode> nodes;
     private final ArrayList<DrawableEdge> edges;
     private final ArrayList<DrawableNode> selectedNodes;
 
     CanvasForm form;
-    JButton submitButton;
-    JTextField textField;
+
     public Canvas() {
+        nodeCurrentNumber = 1;
+
         nodes = new ArrayList<DrawableNode>();
         edges = new ArrayList<DrawableEdge>();
         selectedNodes = new ArrayList<DrawableNode>();
@@ -90,6 +88,9 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         if(isAbleToPutNode(x, y)) {
             nodes.add(new DrawableNode(x, y));
         }
+
+        nodes.get(nodes.size() - 1).setNumber(this.nodeCurrentNumber);
+        this.nodeCurrentNumber++;
     }
 
 

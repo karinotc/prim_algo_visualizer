@@ -1,19 +1,19 @@
-package edu.app.app;
+package edu.app.appWindow;
 
-import edu.app.app.appComponents.Canvas.Canvas;
-import edu.app.app.appComponents.Menu.Menu;
+import edu.app.appWindow.appComponents.Canvas.Canvas;
+import edu.app.appWindow.appComponents.Menu.Menu;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class App extends JFrame {
+public class AppWindow extends JFrame {
 
     Menu menuPanel;
     Canvas canvasPanel;
 
 
 
-    public App() {
+    public AppWindow() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000, 500);
         this.setTitle("Prim");

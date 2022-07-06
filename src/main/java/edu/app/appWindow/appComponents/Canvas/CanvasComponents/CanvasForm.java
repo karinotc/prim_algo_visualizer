@@ -1,4 +1,4 @@
-package edu.app.app.appComponents.Canvas.CanvasComponents;
+package edu.app.appWindow.appComponents.Canvas.CanvasComponents;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,8 @@ public class CanvasForm extends JPanel {
     public CanvasForm() {
         textField = new JTextField();
         textField.setPreferredSize(new Dimension(100, 50));
-        submitButton = new JButton("Enter data");
+        submitButton = new JButton("Enter edge weight");
+        submitButton.setFocusable(false);
         this.add(textField);
         this.add(submitButton);
         submitButton.setEnabled(false);

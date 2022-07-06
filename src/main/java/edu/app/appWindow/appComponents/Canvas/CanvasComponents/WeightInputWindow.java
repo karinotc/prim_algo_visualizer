@@ -1,4 +1,4 @@
-package edu.app.app.appComponents.Canvas.CanvasComponents;
+package edu.app.appWindow.appComponents.Canvas.CanvasComponents;
 
 import javax.swing.*;
 import java.awt.*;

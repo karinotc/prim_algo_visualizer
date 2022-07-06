@@ -1,7 +1,6 @@
-package edu.app.app.appComponents.Menu.Buttons;
+package edu.app.appWindow.appComponents.Menu.Buttons;
 
 import javax.swing.*;
-import java.awt.*;
 
 
 abstract public class Button extends JButton {

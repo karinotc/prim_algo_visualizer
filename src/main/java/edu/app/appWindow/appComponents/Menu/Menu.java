@@ -1,7 +1,7 @@
-package edu.app .app.appComponents.Menu;
+package edu.app .appWindow.appComponents.Menu;
 
 
-import edu.app.app.appComponents.Menu.Buttons.*;
+import edu.app.appWindow.appComponents.Menu.Buttons.*;
 
 import javax.swing.*;
 
