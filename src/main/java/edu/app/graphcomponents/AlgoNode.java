@@ -10,7 +10,8 @@ public class AlgoNode extends Node {
 
     private final Map<AlgoNode, AlgoEdge> adjacent = new HashMap<>();
 
-    public AlgoNode() {
+    public AlgoNode(String id) {
+        this.id = id;
     }
 
     public void addAdjacent(AlgoNode node, AlgoEdge edge) {

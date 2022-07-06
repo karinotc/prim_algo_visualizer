@@ -16,7 +16,7 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
 
     @Override
     public void addNode() {
-        adjacencyList.add(new AlgoNode());
+        adjacencyList.add(new AlgoNode(Integer.toString(adjacencyList.size() + 1)));
     }
 
     @Override
@@ -105,5 +105,4 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         edgeAmount /= 2;
         return edgeAmount;
     }
-
 }
