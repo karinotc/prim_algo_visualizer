@@ -1,6 +1,7 @@
 package edu.app.appWindow.appComponents.Canvas;
 
 import edu.app.appWindow.appComponents.Canvas.CanvasComponents.CanvasForm;
+import edu.app.graph.DrawableGraph;
 import edu.app.graphcomponents.DrawableEdge;
 import edu.app.graphcomponents.DrawableNode;
 
@@ -14,19 +15,20 @@ import java.util.ArrayList;
 
 public class Canvas extends JPanel implements MouseListener, ActionListener {
 
-    private int nodeCurrentNumber;
-    private final ArrayList<DrawableNode> nodes;
-    private final ArrayList<DrawableEdge> edges;
-    private final ArrayList<DrawableNode> selectedNodes;
+    //private int nodeCurrentNumber;
+    private DrawableGraph graph;
+    private ArrayList<Integer> selectedNodes;
+    //private final ArrayList<DrawableNode> selectedNodes; //может int?
 
     CanvasForm form;
 
     public Canvas() {
-        nodeCurrentNumber = 1;
+        //nodeCurrentNumber = 1;
 
-        nodes = new ArrayList<DrawableNode>();
-        edges = new ArrayList<DrawableEdge>();
-        selectedNodes = new ArrayList<DrawableNode>();
+        graph = new DrawableGraph();
+
+        selectedNodes = new ArrayList<Integer>();
+        //selectedNodes = new ArrayList<DrawableNode>();
         this.addMouseListener(this);
 
         form = new CanvasForm();
@@ -36,9 +38,9 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         this.setLayout(new BorderLayout());
         this.add(form, BorderLayout.LINE_END);
 
-        addNewNode(100, 100);
-        addNewNode(230, 45);
-        addNewNode(89, 32);
+        //addNewNode(100, 100);
+        //addNewNode(230, 45);
+        //addNewNode(89, 32);
     }
 
 
@@ -47,59 +49,52 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        for(DrawableEdge drawableEdge : edges) {
-            drawableEdge.drawEdge(g2);
+        for (int i = 0; i<graph.getEdgeAmount(); i++){
+            graph.getEdge(i).drawEdge(g2);
         }
 
-        for(DrawableNode drawableNode : nodes) {
-            drawableNode.drawNode(g2);
+        for (int i = 0; i<graph.getNodeAmount(); i++){
+            graph.getNode(i).drawNode(g2);
         }
     }
 
     private void unselectAllNodes() {
-        for(DrawableNode drawableNode : nodes) {
-            drawableNode.setSelected(false);
+        for (int i = 0; i<graph.getNodeAmount(); i++){
+            graph.getNode(i).setSelected(false);
         }
 
         selectedNodes.clear();
     }
 
     private void selectNode(int clickX, int clickY) {
-        for(DrawableNode drawableNode : nodes) {
-            if(Math.pow(clickX - drawableNode.getX(), 2) + Math.pow(clickY - drawableNode.getY(), 2) <= Math.pow(drawableNode.getRadius(), 2)) {
-                drawableNode.toggleSelected();
-                selectedNodes.add(drawableNode);
+        for (int i = 0; i<graph.getNodeAmount(); i++){
+            if(Math.pow(clickX - graph.getNode(i).getX(), 2) + Math.pow(clickY - graph.getNode(i).getY(), 2) <= Math.pow(graph.getNode(i).getRadius(), 2)) {
+                graph.getNode(i).toggleSelected();
+                selectedNodes.add(i);
+                //selectedNodes.add(graph.getNode(i));
                 break;
             }
         }
     }
 
     private boolean isAbleToPutNode(int clickX, int clickY) {
-
-        for(DrawableNode drawableNode : nodes) {
-            if(Math.pow(clickX - drawableNode.getX(), 2) + Math.pow(clickY - drawableNode.getY(), 2) <= 16 * Math.pow(drawableNode.getRadius(), 2)) {
+        for (int i = 0; i<graph.getNodeAmount(); i++){
+            if(Math.pow(clickX - graph.getNode(i).getX(), 2) + Math.pow(clickY - graph.getNode(i).getY(), 2) <= 16 * Math.pow(graph.getNode(i).getRadius(), 2)) {
                 return false;
             }
         }
-
         return true;
     }
     private void addNewNode(int x, int y) {
         if(isAbleToPutNode(x, y)) {
-            nodes.add(new DrawableNode(x, y));
+            graph.addDrawableNode(x, y);
         }
-
-        nodes.get(nodes.size() - 1).setNumber(this.nodeCurrentNumber);
-        this.nodeCurrentNumber++;
     }
 
-
-    private void createWeighedEdgeBetweenTwoNodes(DrawableNode firstNode, DrawableNode secondNode, int weight) {
-
-        DrawableEdge newEdge = new DrawableEdge(firstNode, secondNode, weight);
-        firstNode.addIncidentalNode(secondNode);
-        secondNode.addIncidentalNode(firstNode);
-        edges.add(newEdge);
+    private void createWeighedEdgeBetweenTwoNodes(int firstNodeIdx, int secondNodeIdx, int weight) {
+        graph.addDrawableEdge(firstNodeIdx, secondNodeIdx, weight);
+        graph.getNode(firstNodeIdx).addIncidentalNode(graph.getNode(secondNodeIdx));
+        graph.getNode(secondNodeIdx).addIncidentalNode(graph.getNode(firstNodeIdx));
     }
 
     @Override
