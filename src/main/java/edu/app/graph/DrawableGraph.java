@@ -4,6 +4,7 @@ import edu.app.graphcomponents.AlgoEdge;
 import edu.app.graphcomponents.AlgoNode;
 import edu.app.graphcomponents.DrawableEdge;
 import edu.app.graphcomponents.DrawableNode;
+import edu.app.input.RandomGraphGenerator;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,30 @@ public class DrawableGraph {
         edgeList.add(new DrawableEdge(nodeList.get(from), nodeList.get(to), weight));
         nodeList.get(from).addIncidentalNode(nodeList.get(to));
         nodeList.get(to).addIncidentalNode(nodeList.get(from));
+    }
+
+    public void randomizeGraph(int centerX, int centerY, int nodeAmount, int minEdgeAmount, int maxEdgeAmount, int minWeight, int maxWeight){
+        clear();
+        graph = RandomGraphGenerator.createRandomGraph(nodeAmount, minEdgeAmount, maxEdgeAmount, minWeight, maxWeight);
+        double increment = 360/nodeAmount;
+        for (int i = 0; i<nodeAmount; i++) {
+            int x = (int)(centerX + 150*Math.cos(increment*i));
+            int y = (int)(centerY + 150*Math.sin(increment*i));
+            DrawableNode node = new DrawableNode(x, y);
+            node.setNumber(nodeList.size()+1);
+            nodeList.add(node);
+        }
+
+        for (int i = 0; i<graph.getListSize(); i++){
+            for (int j = 0; j<graph.getListSize(); j++){
+                if (i==j) continue;
+                if (graph.getNode(i).getNeighbours().contains(graph.getNode(j)) && i<j){
+                    edgeList.add(new DrawableEdge(nodeList.get(i), nodeList.get(j), graph.getNode(i).getEdge(graph.getNode(j)).getWeight()));
+                    nodeList.get(i).addIncidentalNode(nodeList.get(j));
+                    nodeList.get(j).addIncidentalNode(nodeList.get(i));
+                }
+            }
+        }
     }
 
     public void clear() {

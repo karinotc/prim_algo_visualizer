@@ -1,4 +1,4 @@
-package edu.app .appWindow.appComponents.Menu;
+package edu.app.appWindow.appComponents.Menu;
 
 
 import edu.app.appWindow.appComponents.Canvas.Canvas;
@@ -21,6 +21,15 @@ public class Menu extends JPanel {
             appCanvas.repaint();
         };
 
+        ImageIcon generateIcon = buttonIcons.generateButtonIcon;
+        String generateButtonText = buttonsTitles.generateButton;
+
+        ActionListener generateGraph = e -> {
+            appCanvas.getGraph().randomizeGraph(appCanvas.getWidth()/2, appCanvas.getHeight()/2, 10, 9, 15, 1, 20);
+            appCanvas.repaint();
+        };
+
+
 //        List.of(
 //                new CleanButton(),
 //                new LoadButton(),
@@ -31,7 +40,7 @@ public class Menu extends JPanel {
 //                new ToEndButton(),
 //                new ToStartButton()).forEach(this::add);
 //    }
-    List.of(new Button(cleanButtonText, trashcanIcon, cleanGraph)).forEach(this::add);
+    List.of(new Button(cleanButtonText, trashcanIcon, cleanGraph), new Button(generateButtonText, generateIcon, generateGraph)).forEach(this::add);
     }
 
 
