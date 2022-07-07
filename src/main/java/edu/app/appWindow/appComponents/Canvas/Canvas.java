@@ -91,11 +91,15 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         }
     }
 
-    private void createWeighedEdgeBetweenTwoNodes(int firstNodeIdx, int secondNodeIdx, int weight) {
+    private void addEdgeBetweenSelectedNodes(int weight) {
+        graph.addDrawableEdge(selectedNodes.get(0), selectedNodes.get(1), weight);
+    }
+
+    /*private void createWeighedEdgeBetweenTwoNodes(int firstNodeIdx, int secondNodeIdx, int weight) {
         graph.addDrawableEdge(firstNodeIdx, secondNodeIdx, weight);
         graph.getNode(firstNodeIdx).addIncidentalNode(graph.getNode(secondNodeIdx));
         graph.getNode(secondNodeIdx).addIncidentalNode(graph.getNode(firstNodeIdx));
-    }
+    }*/
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -139,7 +143,7 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             int weight = form.getData();
-            createWeighedEdgeBetweenTwoNodes(selectedNodes.get(0), selectedNodes.get(1), weight);
+            addEdgeBetweenSelectedNodes(weight);
 
         } catch (NumberFormatException exception) {
             System.out.println("Wrong input format");

@@ -28,6 +28,8 @@ public class DrawableGraph {
     public void addDrawableEdge(int from, int to, int weight) {
         graph.addWeightedEdge(from+1, to+1, weight);
         edgeList.add(new DrawableEdge(nodeList.get(from), nodeList.get(to), weight));
+        nodeList.get(from).addIncidentalNode(nodeList.get(to));
+        nodeList.get(to).addIncidentalNode(nodeList.get(from));
     }
 
     public void clear() {
