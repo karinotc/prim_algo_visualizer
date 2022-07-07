@@ -15,13 +15,15 @@ public class DrawableNode extends Node {
 
 //    static int number1 = 1;
     private final ArrayList<String> incidentalNodesId;
+    private final ArrayList<DrawableNode> incidentalNodes;
 
 
     public DrawableNode(int centerX, int centerY) {
         this.x = centerX;
         this.y = centerY;
-        this.incidentalNodesId = new ArrayList<String>();
-        this.id = Integer.toString(this.x) + "#" + Integer.toString(this.y);
+        this.incidentalNodesId = new ArrayList<>();
+        this.incidentalNodes = new ArrayList<>();
+        this.id = this.x + "#" + this.y;
     }
 
 
@@ -80,6 +82,7 @@ public class DrawableNode extends Node {
 
     public void addIncidentalNode(DrawableNode node) {
         incidentalNodesId.add(node.getId());
+        incidentalNodes.add(node);
     }
 
     public void setNumber(int number) {

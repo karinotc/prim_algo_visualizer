@@ -22,6 +22,7 @@ public class AppWindow extends JFrame {
         canvasPanel = new Canvas();
 
         menuPanel.setBackground(new Color(201, 197, 197));
+        menuPanel.setAppCanvas(canvasPanel);
 
         menuPanel.setPreferredSize(new Dimension(100, 70));
 

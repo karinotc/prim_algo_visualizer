@@ -2,11 +2,11 @@ package edu.app.appWindow.appComponents.Menu.Buttons;
 
 import javax.swing.*;
 
-public class LoadButton extends Button {
+public class LoadButton  {
     static private ImageIcon icon = new ImageIcon("src/main/java/edu/app/appWindow/appComponents/Menu/Buttons/Images/load.png");
-    static private String buttonText = "Load from file";
+    static private String buttonText = "Load";
 
     public LoadButton() {
-        super(buttonText, icon);
+        
     }
 }

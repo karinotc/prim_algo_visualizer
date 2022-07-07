@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.Expression;
 import java.util.ArrayList;
 
 public class Canvas extends JPanel implements MouseListener, ActionListener {
@@ -22,9 +23,13 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
 
     CanvasForm form;
 
+
+
     public Canvas() {
+
         //nodeCurrentNumber = 1;
 
+        int width = this.getWidth();
         graph = new DrawableGraph();
 
         selectedNodes = new ArrayList<Integer>();
@@ -95,12 +100,6 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         graph.addDrawableEdge(selectedNodes.get(0), selectedNodes.get(1), weight);
     }
 
-    /*private void createWeighedEdgeBetweenTwoNodes(int firstNodeIdx, int secondNodeIdx, int weight) {
-        graph.addDrawableEdge(firstNodeIdx, secondNodeIdx, weight);
-        graph.getNode(firstNodeIdx).addIncidentalNode(graph.getNode(secondNodeIdx));
-        graph.getNode(secondNodeIdx).addIncidentalNode(graph.getNode(firstNodeIdx));
-    }*/
-
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -153,5 +152,9 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         form.disableForm();
         repaint();
 
+    }
+
+    public DrawableGraph getGraph() {
+        return graph;
     }
 }

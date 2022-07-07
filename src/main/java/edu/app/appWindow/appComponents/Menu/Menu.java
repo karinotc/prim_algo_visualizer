@@ -1,37 +1,42 @@
 package edu.app .appWindow.appComponents.Menu;
 
 
+import edu.app.appWindow.appComponents.Canvas.Canvas;
 import edu.app.appWindow.appComponents.Menu.Buttons.*;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 public class Menu extends JPanel {
 
+    private Canvas appCanvas;
     public Menu() {
 
-        CleanButton cleanButton = new CleanButton();
-        LoadButton loadButton = new LoadButton();
-        AddEdgeButton addEdgeButton = new AddEdgeButton();
-        AddNodeButton addNodeButton = new AddNodeButton();
-        GenerateButton generateButton = new GenerateButton();
-        NextButton nextButton = new NextButton();
-        PreviousButton previousButton = new PreviousButton();
-        RemoveButton removeButton = new RemoveButton();
-        ToEndButton toEndButton = new ToEndButton();
-        ToStartButton toStartButton = new ToStartButton();
+        ImageIcon trashcanIcon = buttonIcons.cleanButtonIcon;
+        String cleanButtonText = buttonsTitles.cleanButton;
 
+        ActionListener cleanGraph = e -> {
+            appCanvas.getGraph().clear();
+            appCanvas.repaint();
+        };
 
-        this.add(cleanButton);
-        this.add(loadButton);
-        this.add(generateButton);
-        this.add(addNodeButton);
-        this.add(addEdgeButton);
-        this.add(removeButton);
-        this.add(toStartButton);
-        this.add(previousButton);
-        this.add(nextButton);
-        this.add(toEndButton);
-
+//        List.of(
+//                new CleanButton(),
+//                new LoadButton(),
+//                new GenerateButton(),
+//                new RemoveButton(),
+//                new NextButton(),
+//                new PreviousButton(),
+//                new ToEndButton(),
+//                new ToStartButton()).forEach(this::add);
+//    }
+    List.of(new Button(cleanButtonText, trashcanIcon, cleanGraph)).forEach(this::add);
     }
 
+
+
+    public void setAppCanvas(Canvas appCanvas) {
+        this.appCanvas = appCanvas;
+    }
 }
