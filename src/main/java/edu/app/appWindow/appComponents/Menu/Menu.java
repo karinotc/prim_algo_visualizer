@@ -25,8 +25,10 @@ public class Menu extends JPanel {
         String generateButtonText = buttonsTitles.generateButton;
 
         ActionListener generateGraph = e -> {
-            appCanvas.getGraph().randomizeGraph(appCanvas.getWidth()/2, appCanvas.getHeight()/2, 10, 9, 15, 1, 20);
-            appCanvas.repaint();
+            generateWindow generateParamsWindow = new generateWindow();
+            generateParamsWindow.setAppCanvas(appCanvas);
+//            appCanvas.getGraph().randomizeGraph(appCanvas.getWidth()/2, appCanvas.getHeight()/2, 10, 9, 15, 1, 20);
+//            appCanvas.repaint();
         };
 
 
