@@ -30,6 +30,14 @@ public class Menu extends JPanel {
             appCanvas.repaint();
         };
 
+        ImageIcon loadIcon = buttonIcons.loadButtonIcon;
+        String loadText = buttonsTitles.loadButton;
+
+        ActionListener loadGraph = e -> {
+            appCanvas.getGraph().readGraphFromFile(appCanvas.getWidth()/2, appCanvas.getHeight()/2);
+            appCanvas.repaint();
+        };
+
         ImageIcon toEndIcon = buttonIcons.toEndButtonIcon;
         String toEndText = buttonsTitles.toEndButton;
 
@@ -50,7 +58,7 @@ public class Menu extends JPanel {
 //                new ToStartButton()).forEach(this::add);
 //    }
     List.of(new Button(cleanButtonText, trashcanIcon, cleanGraph), new Button(generateButtonText, generateIcon, generateGraph),
-            new Button(toEndText, toEndIcon, goToEnd)).forEach(this::add);
+            new Button(loadText, loadIcon, loadGraph), new Button(toEndText, toEndIcon, goToEnd)).forEach(this::add);
     }
 
     public void setAppCanvas(Canvas appCanvas) {

@@ -5,6 +5,7 @@ import edu.app.graphcomponents.AlgoEdge;
 import edu.app.graphcomponents.AlgoNode;
 import edu.app.graphcomponents.DrawableEdge;
 import edu.app.graphcomponents.DrawableNode;
+import edu.app.input.GraphReader;
 import edu.app.input.RandomGraphGenerator;
 
 import java.util.ArrayList;
@@ -59,6 +60,16 @@ public class DrawableGraph {
     public void randomizeGraph(int centerX, int centerY, int nodeAmount, int minEdgeAmount, int maxEdgeAmount, int minWeight, int maxWeight){
         clear();
         graph = RandomGraphGenerator.createRandomGraph(nodeAmount, minEdgeAmount, maxEdgeAmount, minWeight, maxWeight);
+        createDrawableGraph(centerX, centerY, nodeAmount);
+    }
+
+    public void readGraphFromFile(int centerX, int centerY) {
+        clear();
+        graph = GraphReader.readFromJSON();
+        createDrawableGraph(centerX, centerY, graph.getListSize());
+    }
+
+    void createDrawableGraph(int centerX, int centerY, int nodeAmount) {
         double increment = 360/nodeAmount;
         for (int i = 0; i<nodeAmount; i++) {
             int x = (int)(centerX + 150*Math.cos(Math.toRadians(increment*i)));
