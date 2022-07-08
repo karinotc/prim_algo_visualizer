@@ -35,14 +35,19 @@ public class DrawableGraph {
     }
 
     public void runPrim(int start){
+        if (!graph.isConnected()){
+            return;
+        }
         PrimAlgo.runAlgorithm(graph, start);
         for (int i = 0; i<graph.getListSize(); i++){
             for (int j = 0; j<graph.getListSize(); j++){
                 if (i >= j) continue;
                 if (graph.getNode(i).getNeighbours().contains(graph.getNode(j)) && (graph.getNode(i).getEdge(graph.getNode(j)).isIncluded() || graph.getNode(j).getEdge(graph.getNode(i)).isIncluded())){
                     for (int k = 0; k < edgeList.size(); k++){
-                        if (nodeList.get(i).getX() == edgeList.get(k).getStartX() && nodeList.get(i).getY() == edgeList.get(k).getStartY() &&
-                                nodeList.get(j).getX() == edgeList.get(k).getEndX() && nodeList.get(j).getY() == edgeList.get(k).getEndY()){
+                        if ((nodeList.get(i).getX() == edgeList.get(k).getStartX() && nodeList.get(i).getY() == edgeList.get(k).getStartY() &&
+                                nodeList.get(j).getX() == edgeList.get(k).getEndX() && nodeList.get(j).getY() == edgeList.get(k).getEndY()) ||
+                                (nodeList.get(j).getX() == edgeList.get(k).getStartX() && nodeList.get(j).getY() == edgeList.get(k).getStartY() &&
+                                        nodeList.get(i).getX() == edgeList.get(k).getEndX() && nodeList.get(i).getY() == edgeList.get(k).getEndY())){
                             edgeList.get(k).recolorIncludedEdge();
                         }
                     }
