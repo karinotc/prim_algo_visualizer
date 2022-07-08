@@ -23,8 +23,6 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
 
     CanvasForm form;
 
-
-
     public Canvas() {
 
         //nodeCurrentNumber = 1;
@@ -32,7 +30,7 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         int width = this.getWidth();
         graph = new DrawableGraph();
 
-        selectedNodes = new ArrayList<Integer>();
+        selectedNodes = new ArrayList<>();
         //selectedNodes = new ArrayList<DrawableNode>();
         this.addMouseListener(this);
 
@@ -42,10 +40,6 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
 
         this.setLayout(new BorderLayout());
         this.add(form, BorderLayout.LINE_END);
-
-        //addNewNode(100, 100);
-        //addNewNode(230, 45);
-        //addNewNode(89, 32);
     }
 
 
@@ -90,6 +84,7 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         }
         return true;
     }
+
     private void addNewNode(int x, int y) {
         if(isAbleToPutNode(x, y)) {
             graph.addDrawableNode(x, y);

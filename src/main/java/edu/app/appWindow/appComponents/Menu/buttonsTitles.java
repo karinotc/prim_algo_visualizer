@@ -10,5 +10,7 @@ public class buttonsTitles {
     public static final String generateButton = "Generate";
     public static final String loadButton = "Load";
 
+    public static final String toEndButton = "To end";
+
 
 }

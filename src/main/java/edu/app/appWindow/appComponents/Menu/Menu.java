@@ -25,10 +25,16 @@ public class Menu extends JPanel {
         String generateButtonText = buttonsTitles.generateButton;
 
         ActionListener generateGraph = e -> {
-            generateWindow generateParamsWindow = new generateWindow();
-            generateParamsWindow.setAppCanvas(appCanvas);
-//            appCanvas.getGraph().randomizeGraph(appCanvas.getWidth()/2, appCanvas.getHeight()/2, 10, 9, 15, 1, 20);
-//            appCanvas.repaint();
+            appCanvas.getGraph().randomizeGraph(appCanvas.getWidth()/2, appCanvas.getHeight()/2, 5, 5, 10, 1, 20);
+            appCanvas.repaint();
+        };
+
+        ImageIcon toEndIcon = buttonIcons.toEndButtonIcon;
+        String toEndText = buttonsTitles.toEndButton;
+
+        ActionListener goToEnd = e -> {
+            appCanvas.getGraph().runPrim(1);
+            appCanvas.repaint();
         };
 
 
@@ -42,10 +48,9 @@ public class Menu extends JPanel {
 //                new ToEndButton(),
 //                new ToStartButton()).forEach(this::add);
 //    }
-    List.of(new Button(cleanButtonText, trashcanIcon, cleanGraph), new Button(generateButtonText, generateIcon, generateGraph)).forEach(this::add);
+    List.of(new Button(cleanButtonText, trashcanIcon, cleanGraph), new Button(generateButtonText, generateIcon, generateGraph),
+            new Button(toEndText, toEndIcon, goToEnd)).forEach(this::add);
     }
-
-
 
     public void setAppCanvas(Canvas appCanvas) {
         this.appCanvas = appCanvas;

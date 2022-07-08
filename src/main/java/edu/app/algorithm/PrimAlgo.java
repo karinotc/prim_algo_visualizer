@@ -9,7 +9,7 @@ public class PrimAlgo {
 
     public PrimAlgo() {}
 
-    public void runAlgorithm(WeightedConnectedGraph graph, int startNode) {
+    public static void runAlgorithm(WeightedConnectedGraph graph, int startNode) {
 
         if (graph.getListSize() > 0) {
             graph.getNode(startNode - 1).visit();

@@ -4,9 +4,10 @@ import java.awt.*;
 
 public class DrawableEdge extends Edge {
 
-    private final Color basicEdgeColor = new Color(0, 0, 0);
+    //private final Color basicEdgeColor = new Color(0, 0, 0);
     private final Color weightTextColor = new Color(101, 254, 154);
     private final Color weightTextBackgroundColor = new Color(162, 36, 184);
+    private int r, g, b = 0;
 
     private final int stroke = 3;
     private int startX, startY, endX, endY, weight;
@@ -37,11 +38,23 @@ public class DrawableEdge extends Edge {
         g2.setPaint(weightTextBackgroundColor);
         g2.drawString(Integer.toString(weight), edgeMiddleX - offsetX, edgeMiddleY + offsetY);
     }
+
+    public void recolorIncludedEdge(){
+        r = 0;
+        g = 0;
+        b = 255;
+    }
+
     public void drawEdge(Graphics2D g2) {
         g2.setStroke(new BasicStroke(stroke));
-        g2.setPaint(basicEdgeColor);
+        g2.setPaint(new Color(r, g, b));
         g2.drawLine(startX, startY, endX, endY);
         drawWeight(g2);
     }
+
+    public int getStartX(){ return startX; }
+    public int getStartY(){ return startY; }
+    public int getEndX(){ return endX; }
+    public int getEndY(){ return endY; }
 
 }
