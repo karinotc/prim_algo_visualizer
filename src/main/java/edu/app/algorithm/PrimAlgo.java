@@ -1,5 +1,6 @@
 package edu.app.algorithm;
 
+import edu.app.exceptions.PrimException;
 import edu.app.graph.WeightedConnectedGraph;
 import edu.app.graphcomponents.*;
 
@@ -10,6 +11,13 @@ public class PrimAlgo {
     public PrimAlgo() {}
 
     public static void runAlgorithm(WeightedConnectedGraph graph, int startNode) {
+        if (graph.getListSize() == 0)
+            throw new PrimException("Graph can't be empty");
+        if (!graph.isConnected())
+            throw new PrimException("Graph must be connected");
+
+        //if (graph.getListSize() == 0 || !graph.isConnected())
+            //return;
 
         if (graph.getListSize() > 0) {
             graph.getNode(startNode - 1).visit();

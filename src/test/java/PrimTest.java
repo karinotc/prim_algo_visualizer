@@ -1,13 +1,14 @@
 //package test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import edu.app.algorithm.PrimAlgo;
+import edu.app.exceptions.PrimException;
 import edu.app.graph.WeightedConnectedGraph;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PrimTest {
     PrimAlgo algo;
@@ -124,5 +125,27 @@ public class PrimTest {
         assertFalse(graph.getNode(7).getEdge(graph.getNode(3)).isIncluded());
         assertFalse(graph.getNode(5).getEdge(graph.getNode(8)).isIncluded());
         assertFalse(graph.getNode(8).getEdge(graph.getNode(5)).isIncluded());
+    }
+
+    @Test
+    @DisplayName("Graph with zero nodes")
+    void testPrimAlgoZero() {
+        Exception exception = assertThrows(PrimException.class, () -> {
+            algo.runAlgorithm(graph, 1);
+        });
+        Assertions.assertEquals("Graph can't be empty", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Disconnected graph")
+    void testPrimAlgoDisconnected() {
+        graph.addNode();
+        graph.addNode();
+        graph.addNode();
+        graph.addWeightedEdge(1, 2, 2);
+        Exception exception = assertThrows(PrimException.class, () -> {
+            algo.runAlgorithm(graph, 1);
+        });
+        Assertions.assertEquals("Graph must be connected", exception.getMessage());
     }
 }

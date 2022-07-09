@@ -3,6 +3,7 @@ package edu.app.appWindow.appComponents.Menu;
 
 import edu.app.appWindow.appComponents.Canvas.Canvas;
 import edu.app.appWindow.appComponents.Menu.Buttons.*;
+import edu.app.exceptions.PrimException;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -47,7 +48,14 @@ public class Menu extends JPanel {
         String toEndText = buttonsTitles.toEndButton;
 
         ActionListener goToEnd = e -> {
-            appCanvas.getGraph().runPrim(1);
+            try {
+                appCanvas.getGraph().runPrim(1);
+            } catch (PrimException ex){
+                ErrorWindow errorWindow = new ErrorWindow(ex.getMessage());
+                errorWindow.setAppCanvas(appCanvas);
+                appCanvas.repaint();
+            }
+
             appCanvas.repaint();
         };
 

@@ -2,6 +2,7 @@ package edu.app.appWindow.appComponents.Menu;
 
 import edu.app.appWindow.appComponents.Canvas.Canvas;
 import edu.app.appWindow.appComponents.Menu.Buttons.Button;
+import edu.app.exceptions.GenerationException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class generateWindow extends JFrame {
     JTextField minEdgeWeightInput;
     JTextField maxEdgeWeightInput;
     JButton submitButton;
+    JButton defaultButton;
 
     JLabel countNodesTitle;
     JLabel minEdgeCountTitle;
@@ -32,6 +34,8 @@ public class generateWindow extends JFrame {
 
         submitButton = new JButton("Create a random graph");
         submitButton.addActionListener(e -> submitClick());
+        defaultButton = new JButton("Use default");
+        defaultButton.addActionListener(e->submitDefault());
 
         countNodesInput = new JTextField();
         minEdgeCountInput = new JTextField();
@@ -51,14 +55,14 @@ public class generateWindow extends JFrame {
         minEdgeWeightInput.setPreferredSize(new Dimension(100, 20));
         maxEdgeWeightInput.setPreferredSize(new Dimension(100, 20));
 
-        this.setLayout(new GridLayout(11, 1));
+        this.setLayout(new GridLayout(12, 1));
 
         List.of(countNodesTitle, countNodesInput,
                 minEdgeCountTitle, minEdgeCountInput,
                 maxEdgeCountTitle, maxEdgeCountInput,
                 minEdgeWeightTitle, minEdgeWeightInput,
                 maxEdgeWeightTitle, maxEdgeWeightInput,
-                submitButton
+                submitButton, defaultButton
         ).forEach(this::add);
 
         this.pack();
@@ -73,6 +77,24 @@ public class generateWindow extends JFrame {
         int maxEdgeCount = Integer.parseInt(maxEdgeCountInput.getText());
         int minEdgeWeight = Integer.parseInt(minEdgeWeightInput.getText());
         int maxEdgeWeight = Integer.parseInt(maxEdgeWeightInput.getText());
+
+        try {
+            appCanvas.getGraph().randomizeGraph(appCanvas.getWidth() / 2, appCanvas.getHeight() / 2, countNodes, minEdgeCount, maxEdgeCount, minEdgeWeight, maxEdgeWeight);
+        } catch(GenerationException e) {
+            ErrorWindow errorWindow = new ErrorWindow(e.getMessage());
+            errorWindow.setAppCanvas(appCanvas);
+            appCanvas.repaint();
+        }
+        appCanvas.repaint();
+        dispose();
+    }
+
+    public void submitDefault(){
+        int countNodes = 6;
+        int minEdgeCount = 6;
+        int maxEdgeCount = 10;
+        int minEdgeWeight = 1;
+        int maxEdgeWeight = 20;
 
         appCanvas.getGraph().randomizeGraph(appCanvas.getWidth()/2, appCanvas.getHeight()/2, countNodes, minEdgeCount, maxEdgeCount, minEdgeWeight, maxEdgeWeight);
         appCanvas.repaint();
