@@ -63,9 +63,9 @@ public class DrawableGraph {
         createDrawableGraph(centerX, centerY, nodeAmount);
     }
 
-    public void readGraphFromFile(int centerX, int centerY) {
+    public void readGraphFromFile(int centerX, int centerY, String filePath) {
         clear();
-        graph = GraphReader.readFromJSON();
+        graph = GraphReader.readFromJSON(filePath);
         createDrawableGraph(centerX, centerY, graph.getListSize());
     }
 

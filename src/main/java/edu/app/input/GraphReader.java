@@ -12,9 +12,8 @@ public class GraphReader {
     public GraphReader() {
     }
 
-    public static WeightedConnectedGraph readFromJSON() {
+    public static WeightedConnectedGraph readFromJSON(String filePath) {
         WeightedConnectedGraph graph = new WeightedConnectedGraph();
-        String filePath = new File("").getAbsolutePath().concat("\\graph.json");
 
         Gson gson = new Gson();
         try (Reader reader = new FileReader(filePath)) {
