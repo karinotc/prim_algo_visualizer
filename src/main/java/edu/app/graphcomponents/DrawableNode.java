@@ -8,8 +8,10 @@ import java.util.List;
 public class DrawableNode extends Node {
 
     private final int radius = 10;
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
+    private final int prevX;
+    private final int prevY;
     private boolean isSelected = false;
     private int number;
 
@@ -21,6 +23,8 @@ public class DrawableNode extends Node {
     public DrawableNode(int centerX, int centerY) {
         this.x = centerX;
         this.y = centerY;
+        this.prevX = centerX;
+        this.prevY = centerY;
         this.incidentalNodesId = new ArrayList<>();
         this.incidentalNodes = new ArrayList<>();
         this.id = this.x + "#" + this.y;
@@ -88,4 +92,12 @@ public class DrawableNode extends Node {
     public void setNumber(int number) {
         this.number = number;
     }
+
+    public void setX(int newX) {
+        this.x = newX;
+    }
+    public void setY(int newY) {
+        this.y = newY;
+    }
+
 }

@@ -7,36 +7,39 @@ import edu.app.graphcomponents.DrawableNode;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.beans.Expression;
+import java.io.File;
 import java.util.ArrayList;
 
-public class Canvas extends JPanel implements MouseListener, ActionListener {
+public class Canvas extends JPanel {
 
-    //private int nodeCurrentNumber;
     private DrawableGraph graph;
     private ArrayList<Integer> selectedNodes;
-    //private final ArrayList<DrawableNode> selectedNodes; //может int?
+
+    private DrawableNode draggableNode;
+
 
     CanvasForm form;
 
     public Canvas() {
 
-        //nodeCurrentNumber = 1;
-
         int width = this.getWidth();
         graph = new DrawableGraph();
+        draggableNode = null;
 
         selectedNodes = new ArrayList<>();
-        //selectedNodes = new ArrayList<DrawableNode>();
-        this.addMouseListener(this);
+
+        ClickListener clickListener = new ClickListener();
+        DragListener dragListener = new DragListener();
+        ActionListener actionListener = e -> submitEdgeWeight();
+
+
+        this.addMouseListener(clickListener);
+        this.addMouseMotionListener(dragListener);
 
         form = new CanvasForm();
-        form.submitButton.addActionListener(this);;
-
+        form.submitButton.addActionListener(actionListener);
 
         this.setLayout(new BorderLayout());
         this.add(form, BorderLayout.LINE_END);
@@ -76,6 +79,18 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         }
     }
 
+
+    private DrawableNode getNodeByClickCoords(int clickX, int clickY) {
+        for (int i = 0; i < graph.getNodeAmount(); i++){
+            DrawableNode currentNode = graph.getNode(i);
+            if(Math.pow(clickX - currentNode.getX(), 2) + Math.pow(clickY - currentNode.getY(), 2) <= Math.pow(graph.getNode(i).getRadius(), 2)) {
+                return currentNode;
+            }
+        }
+
+        return null;
+    }
+
     private boolean isAbleToPutNode(int clickX, int clickY) {
         for (int i = 0; i<graph.getNodeAmount(); i++){
             if(Math.pow(clickX - graph.getNode(i).getX(), 2) + Math.pow(clickY - graph.getNode(i).getY(), 2) <= 16 * Math.pow(graph.getNode(i).getRadius(), 2)) {
@@ -95,46 +110,58 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         graph.addDrawableEdge(selectedNodes.get(0), selectedNodes.get(1), weight);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
+    private class ClickListener extends MouseAdapter {
 
-        int x = e.getX();
-        int y = e.getY();
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
 
-        if(e.getButton() == MouseEvent.BUTTON3) {
-            selectNode(x, y);
-            if(selectedNodes.size() == 2) {
-                form.enableForm();
+            if(e.getButton() == MouseEvent.BUTTON3) {
+                selectNode(x, y);
+                if(selectedNodes.size() == 2) {
+                    form.enableForm();
+                }
+            } else if(e.getButton() == MouseEvent.BUTTON1) {
+                addNewNode(x, y);
             }
-        } else if(e.getButton() == MouseEvent.BUTTON1) {
-            addNewNode(x, y);
+
+            repaint();
         }
 
-        repaint();
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+            try {
+                int clickX = e.getX();
+                int clickY = e.getY();
+
+                draggableNode = getNodeByClickCoords(clickX, clickY);
+
+            } catch (NullPointerException err) {
+                int a = 0;
+            }
+        }
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
+    private class DragListener extends MouseMotionAdapter {
 
+        @Override
+        public void mouseDragged(MouseEvent e) {
+
+            int draggedX = e.getX();
+            int draggedY = e.getY();
+
+            if(draggableNode != null) {
+                draggableNode.setX(draggedX);
+                draggableNode.setY(draggedY);
+                repaint();
+            }
+
+        }
     }
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    public void submitEdgeWeight() {
         try {
             int weight = form.getData();
             addEdgeBetweenSelectedNodes(weight);
@@ -146,7 +173,6 @@ public class Canvas extends JPanel implements MouseListener, ActionListener {
         unselectAllNodes();
         form.disableForm();
         repaint();
-
     }
 
     public DrawableGraph getGraph() {

@@ -12,8 +12,12 @@ public class DrawableEdge extends Edge {
     private final int stroke = 3;
     private int startX, startY, endX, endY, weight;
 
+    private DrawableNode firstNode, secondNode;
+
 
     public DrawableEdge(DrawableNode firstNode, DrawableNode secondNode, int weight) {
+        this.firstNode = firstNode;
+        this.secondNode = secondNode;
         this.startX = firstNode.getX();
         this.startY = firstNode.getY();
         this.endX = secondNode.getX();
@@ -46,6 +50,12 @@ public class DrawableEdge extends Edge {
     }
 
     public void drawEdge(Graphics2D g2) {
+
+        startX = firstNode.getX();
+        startY = firstNode.getY();
+        endX = secondNode.getX();
+        endY = secondNode.getY();
+
         g2.setStroke(new BasicStroke(stroke));
         g2.setPaint(new Color(r, g, b));
         g2.drawLine(startX, startY, endX, endY);
