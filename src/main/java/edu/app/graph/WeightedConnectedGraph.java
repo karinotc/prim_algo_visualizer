@@ -62,6 +62,8 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
 
     @Override
     public boolean isConnected() {
+        if (adjacencyList.size() == 0)
+            return false;
         boolean[] visited = new boolean[adjacencyList.size()];
         ArrayList<AlgoNode> copy = new ArrayList<>(adjacencyList);
         dfs(0, copy, visited);

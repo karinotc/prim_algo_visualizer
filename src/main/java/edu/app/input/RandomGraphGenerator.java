@@ -1,5 +1,6 @@
 package edu.app.input;
 
+import edu.app.exceptions.GenerationException;
 import edu.app.graph.WeightedConnectedGraph;
 
 import javax.swing.plaf.InsetsUIResource;
@@ -11,6 +12,26 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomGraphGenerator {
     public RandomGraphGenerator() {}
     public static WeightedConnectedGraph createRandomGraph(int nodeAmount, int minEdgeAmount, int maxEdgeAmount, int minWeight, int maxWeight){
+        if (nodeAmount <= 0){
+            throw new GenerationException("Amount of nodes must be more than 0");
+        }
+        if (minEdgeAmount < nodeAmount-1){
+            throw new GenerationException("Minimal edge amount can't be less than (node amount - 1)");
+        }
+        if (maxEdgeAmount < minEdgeAmount){
+            throw new GenerationException("Maximum edge amount can't be less than minimum");
+        }
+        if (maxEdgeAmount>nodeAmount*(nodeAmount-1)/2){
+            throw new GenerationException("Maximum edge amount can't be more than ((node amount)(node amount - 1)/2)");
+        }
+        if (minWeight < 0){
+            throw new GenerationException("Weight must be a positive number");
+        }
+        if (maxWeight < minWeight){
+            throw new GenerationException("Maximum weight can't be less than minimum");
+        }
+
+
         ArrayList<Integer> nodeList = new ArrayList<Integer>(nodeAmount);
         for (int i = 0; i<nodeAmount; i++){
             nodeList.add(i);
