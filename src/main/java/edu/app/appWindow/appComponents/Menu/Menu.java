@@ -6,6 +6,7 @@ import edu.app.appWindow.appComponents.Menu.Buttons.*;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 
 public class Menu extends JPanel {
@@ -34,7 +35,11 @@ public class Menu extends JPanel {
         String loadText = buttonsTitles.loadButton;
 
         ActionListener loadGraph = e -> {
-            appCanvas.getGraph().readGraphFromFile(appCanvas.getWidth()/2, appCanvas.getHeight()/2);
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("."));
+            fileChooser.showDialog(this, "Load");
+            File file = fileChooser.getSelectedFile();
+            appCanvas.getGraph().readGraphFromFile(appCanvas.getWidth()/2, appCanvas.getHeight()/2, file.getAbsolutePath());
             appCanvas.repaint();
         };
 
@@ -57,8 +62,8 @@ public class Menu extends JPanel {
 //                new ToEndButton(),
 //                new ToStartButton()).forEach(this::add);
 //    }
-    List.of(new Button(cleanButtonText, trashcanIcon, cleanGraph), new Button(generateButtonText, generateIcon, generateGraph),
-            new Button(loadText, loadIcon, loadGraph), new Button(toEndText, toEndIcon, goToEnd)).forEach(this::add);
+    List.of(new Button(cleanButtonText, cleanGraph), new Button(generateButtonText, generateGraph),
+            new Button(loadText, loadGraph), new Button(toEndText, goToEnd)).forEach(this::add);
     }
 
     public void setAppCanvas(Canvas appCanvas) {
