@@ -20,6 +20,10 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         adjacencyList.add(new AlgoNode(Integer.toString(adjacencyList.size() + 1)));
     }
 
+    public void addNode(String id) {
+        adjacencyList.add(new AlgoNode(id));
+    }
+
     @Override
     public void addEdge(int from, int to) {
         if (from == to)
@@ -111,5 +115,24 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         }
         edgeAmount /= 2;
         return edgeAmount;
+    }
+
+    public WeightedConnectedGraph copy() {
+        WeightedConnectedGraph copy = new WeightedConnectedGraph();
+        for (AlgoNode node : adjacencyList) {
+            copy.addNode(node.getId());
+        }
+
+        for (AlgoNode node : adjacencyList) {
+            Set<AlgoNode> neighbours = node.getNeighbours();
+            Iterator<AlgoNode> it = neighbours.iterator();
+
+            for (AlgoNode neighbour : neighbours) {
+                int nodeIndex = adjacencyList.indexOf(neighbour);
+                copy.addWeightedEdge(adjacencyList.indexOf(node) + 1, nodeIndex + 1, node.getEdge(neighbour).getWeight());
+            }
+        }
+
+        return copy;
     }
 }
