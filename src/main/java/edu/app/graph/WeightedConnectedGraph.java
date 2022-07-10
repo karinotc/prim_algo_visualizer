@@ -108,6 +108,10 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         return adjacencyList.indexOf(node);
     }
 
+    public ArrayList<AlgoNode> getAdjacencyList() {
+        return this.adjacencyList;
+    }
+
     public int getEdgeAmount(){
         int edgeAmount = 0;
         for (AlgoNode node : adjacencyList){
@@ -117,22 +121,32 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         return edgeAmount;
     }
 
-    public WeightedConnectedGraph copy() {
-        WeightedConnectedGraph copy = new WeightedConnectedGraph();
-        for (AlgoNode node : adjacencyList) {
-            copy.addNode(node.getId());
+    public static class Builder {
+        private WeightedConnectedGraph newGraph;
+
+        public Builder() {
+            newGraph = new WeightedConnectedGraph();
         }
 
-        for (AlgoNode node : adjacencyList) {
-            Set<AlgoNode> neighbours = node.getNeighbours();
-            Iterator<AlgoNode> it = neighbours.iterator();
-
-            for (AlgoNode neighbour : neighbours) {
-                int nodeIndex = adjacencyList.indexOf(neighbour);
-                copy.addWeightedEdge(adjacencyList.indexOf(node) + 1, nodeIndex + 1, node.getEdge(neighbour).getWeight());
+        public Builder withAdjacencyList(ArrayList<AlgoNode> adjacencyList) {
+            for (AlgoNode node : adjacencyList) {
+                newGraph.addNode(node.getId());
             }
+
+            for (AlgoNode node : adjacencyList) {
+                Set<AlgoNode> neighbours = node.getNeighbours();
+                Iterator<AlgoNode> it = neighbours.iterator();
+
+                for (AlgoNode neighbour : neighbours) {
+                    int nodeIndex = adjacencyList.indexOf(neighbour);
+                    newGraph.addWeightedEdge(adjacencyList.indexOf(node) + 1, nodeIndex + 1, node.getEdge(neighbour).getWeight());
+                }
+            }
+            return this;
         }
 
-        return copy;
+        public WeightedConnectedGraph build() {
+            return newGraph;
+        }
     }
 }
