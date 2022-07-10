@@ -1,5 +1,6 @@
 package edu.app.graph;
 
+import edu.app.exceptions.WCGraphException;
 import edu.app.graphcomponents.AlgoEdge;
 import edu.app.graphcomponents.AlgoNode;
 
@@ -21,10 +22,14 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
 
     @Override
     public void addEdge(int from, int to) {
+        if (from == to)
+            throw new WCGraphException("Edge can't connect same nodes");
         adjacencyList.get(from - 1).addAdjacent(adjacencyList.get(to - 1), new AlgoEdge());
         adjacencyList.get(to - 1).addAdjacent(adjacencyList.get(from - 1), new AlgoEdge());
     }
     public void addWeightedEdge(int from, int to, int weight) {
+        if (from == to)
+            throw new WCGraphException("Edge can't connect same nodes");
         adjacencyList.get(from - 1).addAdjacent(adjacencyList.get(to - 1), new AlgoEdge(weight));
         adjacencyList.get(to - 1).addAdjacent(adjacencyList.get(from - 1), new AlgoEdge(weight));
     }

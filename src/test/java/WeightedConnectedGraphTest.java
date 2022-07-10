@@ -1,10 +1,12 @@
+import edu.app.exceptions.PrimException;
+import edu.app.exceptions.WCGraphException;
 import edu.app.graph.WeightedConnectedGraph;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WeightedConnectedGraphTest {
     WeightedConnectedGraph graph;
@@ -81,5 +83,25 @@ public class WeightedConnectedGraphTest {
         graph.addEdge(7, 6);
         assertEquals(graph.getEdgeAmount(), 4);
 
+    }
+
+    @Test
+    @DisplayName("Trying to add edge to the same node")
+    void testEdgeToSameNode(){
+        graph.addNode();
+        Exception exception = assertThrows(WCGraphException.class, () -> {
+            graph.addEdge(1, 1);
+        });
+        Assertions.assertEquals("Edge can't connect same nodes", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Trying to add weighted edge to the same node")
+    void testWeightedEdgeToSameNode(){
+        graph.addNode();
+        Exception exception = assertThrows(WCGraphException.class, () -> {
+            graph.addWeightedEdge(1, 1, 2);
+        });
+        Assertions.assertEquals("Edge can't connect same nodes", exception.getMessage());
     }
 }
