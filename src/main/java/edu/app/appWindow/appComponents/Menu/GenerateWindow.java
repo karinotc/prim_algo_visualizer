@@ -1,14 +1,13 @@
 package edu.app.appWindow.appComponents.Menu;
 
 import edu.app.appWindow.appComponents.Canvas.Canvas;
-import edu.app.appWindow.appComponents.Menu.Buttons.Button;
 import edu.app.exceptions.GenerationException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class generateWindow extends JFrame {
+public class GenerateWindow extends JFrame {
 
     private Canvas appCanvas;
     JTextField countNodesInput;
@@ -25,7 +24,7 @@ public class generateWindow extends JFrame {
     JLabel minEdgeWeightTitle;
     JLabel maxEdgeWeightTitle;
 
-    public generateWindow() {
+    public GenerateWindow() {
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(500, 300);

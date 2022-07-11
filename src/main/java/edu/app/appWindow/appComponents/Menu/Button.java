@@ -1,4 +1,4 @@
-package edu.app.appWindow.appComponents.Menu.Buttons;
+package edu.app.appWindow.appComponents.Menu;
 
 import javax.swing.*;
 import java.awt.*;

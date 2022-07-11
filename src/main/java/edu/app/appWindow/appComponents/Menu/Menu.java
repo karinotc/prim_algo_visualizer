@@ -15,25 +15,22 @@ public class Menu extends JPanel {
     private Canvas appCanvas;
     public Menu() {
 
-        ImageIcon trashcanIcon = buttonIcons.cleanButtonIcon;
-        String cleanButtonText = buttonsTitles.cleanButton;
+        String cleanButtonText = Buttons.CLEAN_BUTTON.title;
 
-        ActionListener cleanGraph = e -> {
+        ActionListener cleanGraph = (e) -> {
             appCanvas.getGraph().clear();
             appCanvas.repaint();
         };
 
-        ImageIcon generateIcon = buttonIcons.generateButtonIcon;
-        String generateButtonText = buttonsTitles.generateButton;
+        String generateButtonText = Buttons.GENERATE_BUTTON.title;
 
         ActionListener generateGraph = e -> {
-            generateWindow generateParamsWindow = new generateWindow();
+            GenerateWindow generateParamsWindow = new GenerateWindow();
             generateParamsWindow.setAppCanvas(appCanvas);
             appCanvas.repaint();
         };
 
-        ImageIcon loadIcon = buttonIcons.loadButtonIcon;
-        String loadText = buttonsTitles.loadButton;
+        String loadText = Buttons.LOAD_BUTTON.title;
 
         ActionListener loadGraph = e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -44,8 +41,7 @@ public class Menu extends JPanel {
             appCanvas.repaint();
         };
 
-        ImageIcon toEndIcon = buttonIcons.toEndButtonIcon;
-        String toEndText = buttonsTitles.toEndButton;
+        String toEndText = Buttons.TO_END_BUTTON.title;
 
         ActionListener goToEnd = e -> {
             try {
@@ -60,16 +56,6 @@ public class Menu extends JPanel {
         };
 
 
-//        List.of(
-//                new CleanButton(),
-//                new LoadButton(),
-//                new GenerateButton(),
-//                new RemoveButton(),
-//                new NextButton(),
-//                new PreviousButton(),
-//                new ToEndButton(),
-//                new ToStartButton()).forEach(this::add);
-//    }
     List.of(new Button(cleanButtonText, cleanGraph), new Button(generateButtonText, generateGraph),
             new Button(loadText, loadGraph), new Button(toEndText, goToEnd)).forEach(this::add);
     }
@@ -77,4 +63,5 @@ public class Menu extends JPanel {
     public void setAppCanvas(Canvas appCanvas) {
         this.appCanvas = appCanvas;
     }
+
 }
