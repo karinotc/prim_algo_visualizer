@@ -3,7 +3,7 @@ package edu.app.graphcomponents;
 abstract public class Node {
     String id;
 
-    String getId() {
+    public String getId() {
         return id;
     }
 }

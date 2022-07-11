@@ -36,9 +36,6 @@ public class DrawableGraph {
     }
 
     public void runPrim(int start){
-        //if (!graph.isConnected()){
-            //return;
-        //}
         PrimAlgo.runAlgorithm(graph, start);
         for (int i = 0; i<graph.getListSize(); i++){
             for (int j = 0; j<graph.getListSize(); j++){
@@ -60,8 +57,7 @@ public class DrawableGraph {
     public void randomizeGraph(int centerX, int centerY, int nodeAmount, int minEdgeAmount, int maxEdgeAmount, int minWeight, int maxWeight){
         clear();
         graph = RandomGraphGenerator.createRandomGraph(nodeAmount, minEdgeAmount, maxEdgeAmount, minWeight, maxWeight);
-        if (graph != null)
-            createDrawableGraph(centerX, centerY, nodeAmount);
+        createDrawableGraph(centerX, centerY, nodeAmount);
     }
 
     public void readGraphFromFile(int centerX, int centerY, String filePath) {

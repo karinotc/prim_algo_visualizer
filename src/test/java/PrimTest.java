@@ -148,4 +148,19 @@ public class PrimTest {
         });
         Assertions.assertEquals("Graph must be connected", exception.getMessage());
     }
+
+    @Test
+    @DisplayName("Graph with negative weight")
+    void testPrimAlgoNegativeWeight() {
+        graph.addNode();
+        graph.addNode();
+        graph.addNode();
+        graph.addWeightedEdge(1, 2, 2);
+        graph.addWeightedEdge(2, 3, -3);
+        Exception exception = assertThrows(PrimException.class, () -> {
+            algo.runAlgorithm(graph, 1);
+        });
+        Assertions.assertEquals("Weight must be a positive number", exception.getMessage());
+    }
+
 }

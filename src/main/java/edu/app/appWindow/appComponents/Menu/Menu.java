@@ -55,7 +55,6 @@ public class Menu extends JPanel {
             appCanvas.repaint();
         };
 
-
     List.of(new Button(cleanButtonText, cleanGraph), new Button(generateButtonText, generateGraph),
             new Button(loadText, loadGraph), new Button(toEndText, goToEnd)).forEach(this::add);
     }

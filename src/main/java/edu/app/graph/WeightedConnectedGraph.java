@@ -1,5 +1,6 @@
 package edu.app.graph;
 
+import edu.app.exceptions.WCGraphException;
 import edu.app.graphcomponents.AlgoEdge;
 import edu.app.graphcomponents.AlgoNode;
 
@@ -19,12 +20,20 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         adjacencyList.add(new AlgoNode(Integer.toString(adjacencyList.size() + 1)));
     }
 
+    public void addNode(String id) {
+        adjacencyList.add(new AlgoNode(id));
+    }
+
     @Override
     public void addEdge(int from, int to) {
+        if (from == to)
+            throw new WCGraphException("Edge can't connect same nodes");
         adjacencyList.get(from - 1).addAdjacent(adjacencyList.get(to - 1), new AlgoEdge());
         adjacencyList.get(to - 1).addAdjacent(adjacencyList.get(from - 1), new AlgoEdge());
     }
     public void addWeightedEdge(int from, int to, int weight) {
+        if (from == to)
+            throw new WCGraphException("Edge can't connect same nodes");
         adjacencyList.get(from - 1).addAdjacent(adjacencyList.get(to - 1), new AlgoEdge(weight));
         adjacencyList.get(to - 1).addAdjacent(adjacencyList.get(from - 1), new AlgoEdge(weight));
     }
@@ -99,6 +108,10 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         return adjacencyList.indexOf(node);
     }
 
+    public ArrayList<AlgoNode> getAdjacencyList() {
+        return this.adjacencyList;
+    }
+
     public int getEdgeAmount(){
         int edgeAmount = 0;
         for (AlgoNode node : adjacencyList){
@@ -106,5 +119,34 @@ public class WeightedConnectedGraph implements Graph, Weighted, Connected {
         }
         edgeAmount /= 2;
         return edgeAmount;
+    }
+
+    public static class Builder {
+        private WeightedConnectedGraph newGraph;
+
+        public Builder() {
+            newGraph = new WeightedConnectedGraph();
+        }
+
+        public Builder withAdjacencyList(ArrayList<AlgoNode> adjacencyList) {
+            for (AlgoNode node : adjacencyList) {
+                newGraph.addNode(node.getId());
+            }
+
+            for (AlgoNode node : adjacencyList) {
+                Set<AlgoNode> neighbours = node.getNeighbours();
+                Iterator<AlgoNode> it = neighbours.iterator();
+
+                for (AlgoNode neighbour : neighbours) {
+                    int nodeIndex = adjacencyList.indexOf(neighbour);
+                    newGraph.addWeightedEdge(adjacencyList.indexOf(node) + 1, nodeIndex + 1, node.getEdge(neighbour).getWeight());
+                }
+            }
+            return this;
+        }
+
+        public WeightedConnectedGraph build() {
+            return newGraph;
+        }
     }
 }

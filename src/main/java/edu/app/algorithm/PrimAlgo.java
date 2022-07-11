@@ -16,9 +16,6 @@ public class PrimAlgo {
         if (!graph.isConnected())
             throw new PrimException("Graph must be connected");
 
-        //if (graph.getListSize() == 0 || !graph.isConnected())
-            //return;
-
         if (graph.getListSize() > 0) {
             graph.getNode(startNode - 1).visit();
         }
@@ -30,6 +27,8 @@ public class PrimAlgo {
                 AlgoNode node = graph.getNode(i);
                 if (node.isVisited()) {
                     Map.Entry<AlgoNode, AlgoEdge> candidate = node.getMinEdge();
+                    if (candidate.getValue().getWeight()<0)
+                        throw new PrimException("Weight must be a positive number");
                     if (candidate.getValue().getWeight() < nextMinEdge.getWeight()) {
                         nextMinEdge = candidate.getValue();
                         nextAlgoNode = candidate.getKey();
