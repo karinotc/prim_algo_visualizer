@@ -71,18 +71,19 @@ public class GenerateWindow extends JFrame {
     }
 
     public void submitClick() {
-        int countNodes = Integer.parseInt(countNodesInput.getText());
-        int minEdgeCount = Integer.parseInt(minEdgeCountInput.getText());
-        int maxEdgeCount = Integer.parseInt(maxEdgeCountInput.getText());
-        int minEdgeWeight = Integer.parseInt(minEdgeWeightInput.getText());
-        int maxEdgeWeight = Integer.parseInt(maxEdgeWeightInput.getText());
-
         try {
+            int countNodes = Integer.parseInt(countNodesInput.getText());
+            int minEdgeCount = Integer.parseInt(minEdgeCountInput.getText());
+            int maxEdgeCount = Integer.parseInt(maxEdgeCountInput.getText());
+            int minEdgeWeight = Integer.parseInt(minEdgeWeightInput.getText());
+            int maxEdgeWeight = Integer.parseInt(maxEdgeWeightInput.getText());
             appCanvas.getGraph().randomizeGraph(appCanvas.getWidth() / 2, appCanvas.getHeight() / 2, countNodes, minEdgeCount, maxEdgeCount, minEdgeWeight, maxEdgeWeight);
         } catch(GenerationException e) {
             ErrorWindow errorWindow = new ErrorWindow(e.getMessage());
             errorWindow.setAppCanvas(appCanvas);
             appCanvas.repaint();
+        } catch (NumberFormatException e){
+            return;
         }
         appCanvas.repaint();
         dispose();

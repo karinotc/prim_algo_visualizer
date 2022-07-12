@@ -37,7 +37,9 @@ public class Menu extends JPanel {
             fileChooser.setCurrentDirectory(new File("."));
             fileChooser.showDialog(this, "Load");
             File file = fileChooser.getSelectedFile();
-            appCanvas.getGraph().readGraphFromFile(appCanvas.getWidth()/2, appCanvas.getHeight()/2, file.getAbsolutePath());
+            try {
+                appCanvas.getGraph().readGraphFromFile(appCanvas.getWidth() / 2, appCanvas.getHeight() / 2, file.getAbsolutePath());
+            } catch (NullPointerException ignored){}
             appCanvas.repaint();
         };
 
