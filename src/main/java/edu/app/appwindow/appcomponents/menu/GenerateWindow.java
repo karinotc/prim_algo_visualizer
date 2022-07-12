@@ -1,6 +1,6 @@
-package edu.app.appWindow.appComponents.Menu;
+package edu.app.appwindow.appcomponents.menu;
 
-import edu.app.appWindow.appComponents.Canvas.Canvas;
+import edu.app.appwindow.appcomponents.canvas.Canvas;
 import edu.app.exceptions.GenerationException;
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package edu.app.appWindow.appComponents.Canvas;
+package edu.app.appwindow.appcomponents.canvas;
 
 import edu.app.appWindow.appComponents.Canvas.CanvasComponents.CanvasForm;
 import edu.app.graph.DrawableGraph;
@@ -73,7 +73,6 @@ public class Canvas extends JPanel {
             if(Math.pow(clickX - graph.getNode(i).getX(), 2) + Math.pow(clickY - graph.getNode(i).getY(), 2) <= Math.pow(graph.getNode(i).getRadius(), 2)) {
                 graph.getNode(i).toggleSelected();
                 selectedNodes.add(i);
-                //selectedNodes.add(graph.getNode(i));
                 break;
             }
         }

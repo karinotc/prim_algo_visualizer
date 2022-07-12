@@ -1,7 +1,7 @@
-package edu.app.appWindow;
+package edu.app.appwindow;
 
-import edu.app.appWindow.appComponents.Canvas.Canvas;
-import edu.app.appWindow.appComponents.Menu.Menu;
+import edu.app.appwindow.appcomponents.canvas.Canvas;
+import edu.app.appwindow.appcomponents.menu.Menu;
 
 import javax.swing.*;
 import java.awt.*;
